@@ -19,8 +19,17 @@ void setup() {
 }
 
 void loop() {
-  
+   
   val = analogRead(LIGHT); //포토레지스터에서 조도값 읽기
+  voltage = val*5.0/1024.0; //조도값을 통한 전압 레벨 구하기
+  
+  //시리얼 프린터로 조도값과 전압 레벨을 출력
+  Serial.println("val:");
+  Serial.println(val);
+  Serial.println("voltage:");
+  Serial.println(voltage);
+  delay(1000);
+  
   val = map(val, MIN_LIGHT, MAX_LIGHT, 255, 0); //조도값을 매핑
   val = constrain(val, 0, 255); //조도값을 0~255 사이로 제한
   //조도값에 따른 led들의 밝기 변화
@@ -28,11 +37,4 @@ void loop() {
   analogWrite(RLED, val);
   analogWrite(YLED, val);
 
-  voltage = val*5.0/1024.0; //조도값을 통한 전압 레벨 구하기
-  //시리얼 프린터로 조도값과 전압 레벨을 출력
-  Serial.println("val:");
-  Serial.println(val);
-  Serial.println("voltage:");
-  Serial.println(voltage);
-  delay(1000);
 }
